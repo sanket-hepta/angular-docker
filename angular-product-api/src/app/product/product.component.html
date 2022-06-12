@@ -1,0 +1,108 @@
+
+<div class="container">
+    
+    <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product Image</th>
+            <th scope="col">Product Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <th scope="row">{{product.pid}}</th>
+            <td><img class="img-thumbnail" style="height: 100px;" src="{{product.image_url}}" /></td>
+            <td>{{product.pname}}</td>
+            <td>{{product.price}}</td>
+            <td>
+                <button type="button" class="btn btn-success" (click)="updateProduct(product)">Edit</button>&nbsp;
+                <button type="button" class="btn btn-info" (click)="updateProductPrice(product)">Edit Price</button>&nbsp;
+                <button type="button" class="btn btn-danger" (click)="deleteProduct(product.pid)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+
+    <div class="mb-3 mt-3">
+        <div *ngIf="status == true" class="alert alert-success" role="alert">
+            {{message}}
+        </div>
+        <div *ngIf="status == false" class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+    </div>
+
+    <div *ngIf="flag">
+        <h2>------------------------------Update Product-----------------------</h2>
+        <form [formGroup]="productUpdateRef" (ngSubmit)="updateProductDetails()">
+            <input type="hidden" [(ngModel)]="product.pid" formControlName="pid" />
+            <div class="mb-3 form-group">
+                <label for="pid">Product Name</label>
+                <input type="text" class="form-control" id="pname" [(ngModel)]="product.pname" formControlName="pname">
+            </div>
+    
+            <div class="mb-3 form-group">
+                <label for="pid">Product Price</label>
+                <input type="text" class="form-control" id="price" [(ngModel)]="product.price" formControlName="price">
+            </div>
+    
+            <div class="mb-3 form-group">
+                <label for="pid">Image URL</label>
+                <input type="url" class="form-control" id="image_url" [(ngModel)]="product.image_url" formControlName="image_url">
+            </div>
+    
+            <div class="mb-3 form-group">
+                <button type="submit" class="btn btn-primary">Update Product</button>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="priceFlag">
+        <h2>------------------------------Update Product Price-----------------------</h2>
+        <form (ngSubmit)="updateProductPriceDetails()">
+            <input type="hidden" [(ngModel)]="priceProduct.pid" name="pid" />
+    
+            <div class="mb-3 form-group">
+                <label for="pid">Product Price</label>
+                <input type="text" class="form-control" [(ngModel)]="priceProduct.price" name="price">
+            </div>
+    
+            <div class="mb-3 form-group">
+                <button type="submit" class="btn btn-primary">Update Product Price</button>
+            </div>
+        </form>
+    </div>
+
+    <h2>------------------------------Add Product-----------------------</h2>
+
+    <form [formGroup]="productRef" (ngSubmit)="saveProduct()">
+        <div class="mb-3 form-group">
+            <label for="pid">Product ID</label>
+            <input type="number" class="form-control" id="pid" formControlName="pid">
+        </div>
+        
+        <div class="mb-3 form-group">
+            <label for="pid">Product Name</label>
+            <input type="text" class="form-control" id="pname" formControlName="pname">
+        </div>
+
+        <div class="mb-3 form-group">
+            <label for="pid">Product Price</label>
+            <input type="text" class="form-control" id="price" formControlName="price">
+        </div>
+
+        <div class="mb-3 form-group">
+            <label for="pid">Image URL</label>
+            <input type="url" class="form-control" id="image_url" formControlName="image_url">
+        </div>
+
+        <div class="mb-3 form-group">
+            <button type="submit" class="btn btn-primary">Add Product</button>&nbsp;
+            <button type="reset" class="btn btn-dark">Reset</button>
+        </div>
+    </form>
+
+</div>
